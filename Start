@@ -1,0 +1,9 @@
+from Choosables.Choosable import Choosable
+from Choosables.Menus.Implementations.MainMenu import MainMenu
+
+_menu: Choosable = MainMenu()
+_menu.execute()
+
+while True:
+    _menu = _menu.choice(_menu, int(input()))
+    _menu.execute()
