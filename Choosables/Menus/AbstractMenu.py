@@ -1,4 +1,5 @@
 import abc
+from functools import singledispatchmethod
 
 from Choosables.Choosable import Choosable
 from Choosables.Functions.AbstractFunction import AbstractFunction
@@ -18,11 +19,18 @@ class AbstractMenu(Choosable):
         userchoice: Choosable = cls.choosables.__getitem__(userinput)()
         userchoice.set_previous_choosable(cls)
 
-        if isinstance(userchoice, AbstractFunction):
-            userchoice.execute()
-            return cls
-        else:
-            return userchoice
+        return cls.rule(userchoice)
+
+    @singledispatchmethod
+    @classmethod
+    def rule(cls, value): #default rule
+        return value
+
+    @rule.register(AbstractFunction)
+    @classmethod
+    def rule_for_functions(cls, abstractfunction: AbstractFunction):
+        abstractfunction.execute()
+        return cls
 
     @classmethod
     def execute(cls) -> None:

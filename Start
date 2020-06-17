@@ -1,7 +1,7 @@
-from Choosables.Choosable import Choosable
+from Choosables.Menus.AbstractMenu import AbstractMenu
 from Choosables.Menus.Implementations.MainMenu import MainMenu
 
-_menu: Choosable = MainMenu()
+_menu: AbstractMenu = MainMenu()
 _menu.execute()
 
 while True:
