@@ -14,8 +14,12 @@ class AbstractMenu(Choosable):
         cls.choosables = listofchoosables
 
     @classmethod
-    def choice(cls, previous_menu: Choosable, userinput: int) -> Choosable:
-        cls.set_previous_choosable(previous_menu)
+    def choice(cls, userinput: int) -> Choosable:
+
+        if userinput == 0:
+            return cls.get_previous_choosable()
+
+        userinput -= 1
         userchoice: Choosable = cls.choosables.__getitem__(userinput)()
         userchoice.set_previous_choosable(cls)
 
@@ -23,7 +27,7 @@ class AbstractMenu(Choosable):
 
     @singledispatchmethod
     @classmethod
-    def rule(cls, value): #default rule
+    def rule(cls, value):  # default rule
         return value
 
     @rule.register(AbstractFunction)
@@ -34,7 +38,15 @@ class AbstractMenu(Choosable):
 
     @classmethod
     def execute(cls) -> None:
-        i = 0
+        i = 1
+
+        previousChoice = cls.get_previous_choosable()
+
+        print(cls.to_string())
+
+        if previousChoice is not None:
+            print("0 : Back")
+
         for choice in cls.choosables:
             print(str(i) + " : " + choice.to_string())
             i += 1

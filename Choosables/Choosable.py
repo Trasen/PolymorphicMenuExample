@@ -4,12 +4,11 @@ import abc
 
 
 class Choosable(metaclass=abc.ABCMeta):
-
-    previous_choice: Choosable
+    previous_choice: Choosable = None
 
     @classmethod
     @abc.abstractmethod
-    def choice(cls, choosable, input: int) -> Choosable:
+    def choice(cls, _menu, input: int) -> Choosable:
         pass
 
     @classmethod

@@ -5,5 +5,5 @@ _menu: AbstractMenu = MainMenu()
 _menu.execute()
 
 while True:
-    _menu = _menu.choice(_menu, int(input()))
+    _menu = _menu.choice(int(input()))
     _menu.execute()
